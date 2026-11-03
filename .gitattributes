@@ -1,0 +1,17 @@
+# Keep LF everywhere; never let git rewrite line endings (assets and downloads stay byte-identical).
+* text=auto eol=lf
+
+# binaries
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.svg text eol=lf
+*.pdf binary
+*.mp4 binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary

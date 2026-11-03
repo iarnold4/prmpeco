@@ -1,0 +1,21 @@
+{
+  "name": "prmpeco",
+  "version": "0.0.1",
+  "private": true,
+  "description": "prmpeco.com, the electrical service and controls division of Product Recovery Management, Inc.",
+  "type": "module",
+  "engines": {
+    "node": ">=22.23.4"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.3.4",
+    "astro": "^7.4.5",
+    "tailwindcss": "^4.3.4"
+  }
+}
