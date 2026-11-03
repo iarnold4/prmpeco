@@ -1,0 +1,47 @@
+---
+// Site footer: navy, four columns (the division, the pages, contact, licensing), then the service notice and the
+// copyright line. Every line of text is from the owner's brief via src/data/site.js, except the boilerplate
+// copyright. The brief asks for the licence numbers and the no-residential notice here.
+// The logo slot shows the name as text until a reversed (white) wordmark is exported from the PSD: the colour
+// logo's navy letters would vanish on the navy ground.
+import { footerLinks } from '../data/navigation.js';
+import { site } from '../data/site.js';
+
+const year = new Date().getFullYear();
+---
+<footer class="bg-brand-navy py-12 text-gray-300">
+	<div class="container-site">
+		<div class="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
+			<div>
+				<p class="text-2xl font-bold text-white">{site.name}</p>
+				<p class="mt-3 text-sm leading-relaxed">{site.division}</p>
+				<p class="mt-3 text-sm"><a href={site.parent.href} class="font-semibold text-brand-yellow hover:text-white" target="_blank" rel="noopener">{site.parent.label}</a></p>
+			</div>
+			<div>
+				<h2 class="mb-4 text-base font-semibold text-white">Pages</h2>
+				<ul class="space-y-2 text-sm">
+					{footerLinks.map((l) => <li><a href={l.href} class="hover:text-white">{l.label}</a></li>)}
+				</ul>
+			</div>
+			<div>
+				<h2 class="mb-4 text-base font-semibold text-white">Contact</h2>
+				<ul class="space-y-2 text-sm">
+					<li>{site.contact.name}, {site.contact.role}</li>
+					<li><a href={`mailto:${site.contact.email}`} class="text-white hover:text-brand-yellow">{site.contact.email}</a></li>
+					<li>Direct Phone: {site.contact.phone}</li>
+					<li>{site.location}</li>
+				</ul>
+			</div>
+			<div>
+				<h2 class="mb-4 text-base font-semibold text-white">Licensing</h2>
+				<ul class="space-y-2 text-sm">
+					{site.licenses.map((l) => <li>{l.label} {l.number}</li>)}
+				</ul>
+			</div>
+		</div>
+		<div class="mt-10 border-t border-white/15 pt-8 text-sm">
+			<p class="font-semibold text-white">{site.serviceNotice}</p>
+			<p class="mt-4 text-xs">&copy; {year} {site.owner} All rights reserved.</p>
+		</div>
+	</div>
+</footer>

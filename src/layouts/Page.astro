@@ -1,0 +1,41 @@
+---
+// Layout for a page: head meta, an optional banner, then the page's own content.
+import Base from './Base.astro';
+import PageBanner from '../components/PageBanner.astro';
+import { site } from '../data/site.js';
+
+interface Props {
+  path: string; // the route, e.g. '/about/'
+  title: string; // the <title>
+  description?: string;
+  banner?: string; // the banner heading; no banner when empty
+  bannerLead?: string;
+  bannerEyebrow?: string;
+  bannerSize?: 'lg' | 'md';
+  bannerAlign?: 'left' | 'center';
+  ogImage?: string;
+  jsonLd?: object | object[];
+}
+const { path, title, description, banner, bannerLead, bannerEyebrow, bannerSize, bannerAlign, ogImage, jsonLd } = Astro.props;
+const url = `${site.url}${path}`;
+const image = ogImage ?? site.ogImage;
+const ld = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+---
+<Base>
+	<Fragment slot="head">
+		<title>{title}</title>
+		{description && <meta name="description" content={description} />}
+		<link rel="canonical" href={url} />
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content={title} />
+		{description && <meta property="og:description" content={description} />}
+		<meta property="og:url" content={url} />
+		<meta property="og:image" content={`${site.url}${image}`} />
+		{ld.map((obj) => <script is:inline type="application/ld+json" set:html={JSON.stringify(obj)}></script>)}
+		<slot name="head" />
+	</Fragment>
+
+	{banner && <PageBanner title={banner} lead={bannerLead} eyebrow={bannerEyebrow} size={bannerSize} align={bannerAlign} />}
+
+	<slot />
+</Base>

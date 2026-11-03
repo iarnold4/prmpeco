@@ -1,1 +1,59 @@
 @import "tailwindcss";
+
+/* Design tokens. The three colours are the prmpeco logo's own, measured from public/images/logo.png on 2026-11-03:
+   navy #0b2e4c (the wordmark), yellow #e8ce20 (the bolt), gray #7c848b (the "Powered by" line). The dark steps are
+   hover states; pale is a light tint of the navy for alternating section backgrounds (not from the logo).
+   Every component uses these names, never a raw colour, so a theme change is this block only.
+   Type is the system sans stack (Tailwind's default), as on prmdetect.com. */
+@theme {
+  --color-brand-navy: #0b2e4c;
+  --color-brand-navy-dark: #072036;
+  --color-brand-yellow: #e8ce20;
+  --color-brand-yellow-dark: #c9b11a;
+  --color-brand-gray: #7c848b;
+  --color-brand-pale: #f3f5f7;
+}
+
+@layer base {
+  /* in-page links glide, unless the visitor asked for reduced motion (the test harnesses do) */
+  @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+  body { @apply bg-white text-gray-700 antialiased; }
+  h1, h2, h3, h4 { @apply font-bold text-gray-900; }
+  a { @apply transition-colors; }
+  /* the sticky header is 80px: in-page anchors stop under it */
+  [id] { scroll-margin-top: 6rem; }
+}
+
+@layer components {
+  /* One content column sitewide (the house "container mx-auto px-4", capped at 1280px) */
+  .container-site { @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8; }
+
+  /* Buttons: navy primary, yellow secondary (the logo's pairing), white outline on dark backgrounds */
+  .btn, .btn-primary, .btn-secondary, .btn-white, .btn-outline-white, .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 rounded px-6 py-3 font-semibold no-underline transition;
+  }
+  .btn-primary { @apply bg-brand-navy text-white hover:bg-brand-navy-dark; }
+  .btn-secondary { @apply bg-brand-yellow text-brand-navy hover:bg-brand-yellow-dark; }
+  .btn-white { @apply bg-white text-brand-navy hover:bg-brand-pale; }
+  .btn-outline-white { @apply border-2 border-white text-white hover:bg-white hover:text-brand-navy; }
+  .btn-outline { @apply border-2 border-brand-navy text-brand-navy hover:bg-brand-navy hover:text-white; }
+  .btn-lg { @apply px-8 py-4 text-lg; }
+
+  /* Section rhythm */
+  .section { @apply py-16 lg:py-20; }
+  .section-title { @apply text-3xl font-bold text-gray-900 sm:text-4xl; }
+  .section-lead { @apply mx-auto mt-4 max-w-2xl text-lg text-gray-600; }
+
+  /* Cards */
+  .card { @apply flex flex-col overflow-hidden rounded-lg border border-gray-200 bg-white transition hover:shadow-lg; }
+
+  /* Running text */
+  .prose-site { @apply text-[17px] leading-relaxed text-gray-700; }
+  .prose-site p + p, .prose-site p + ul, .prose-site ul + p { @apply mt-5; }
+  .prose-site h2 { @apply mt-10 mb-4 text-2xl font-bold text-gray-900; }
+  .prose-site h3 { @apply mt-8 mb-3 text-xl font-bold text-gray-900; }
+  .prose-site ul { @apply list-disc pl-6; }
+  .prose-site li + li { @apply mt-1.5; }
+  .prose-site a { @apply text-brand-navy underline hover:text-brand-navy-dark; }
+  .prose-site strong { @apply font-semibold text-gray-900; }
+}
