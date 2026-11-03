@@ -1,0 +1,20 @@
+---
+// The page for an address that does not exist. The host serves it with a 404 status; astro preview does the same.
+// Boilerplate wording, as on the sibling sites.
+import Page from '../layouts/Page.astro';
+---
+<Page
+	path="/404/"
+	title="Page not found | PRMPECO"
+	banner="Page not found"
+	bannerLead="There is nothing at this address."
+	bannerSize="md"
+>
+	<Fragment slot="head"><meta name="robots" content="noindex, follow" /></Fragment>
+	<section class="section">
+		<div class="container-site flex flex-wrap gap-4">
+			<a href="/" class="btn-primary">Back to Home</a>
+			<a href="/contact/" class="btn-outline">Contact</a>
+		</div>
+	</section>
+</Page>

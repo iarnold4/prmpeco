@@ -1,0 +1,23 @@
+---
+// The banner at the top of a page: the title (and an optional eyebrow and lead) in white on a navy gradient.
+// A photo behind it comes later, when there are photos.
+interface Props {
+  title: string;
+  lead?: string;
+  eyebrow?: string;
+  level?: 'h1' | 'h2';
+  size?: 'lg' | 'md';
+  align?: 'left' | 'center';
+}
+const { title, lead, eyebrow, level: Heading = 'h1', size = 'lg', align = 'left' } = Astro.props;
+---
+<section class:list={['relative overflow-hidden bg-gradient-to-r from-brand-navy to-brand-navy-dark text-white', size === 'lg' ? 'py-16 lg:py-24' : 'py-12 lg:py-16']}>
+	<div class:list={['container-site relative', align === 'center' && 'text-center']}>
+		<div class:list={[align === 'center' ? 'mx-auto max-w-3xl' : 'max-w-3xl']}>
+			{eyebrow && <p class="mb-3 text-sm font-semibold uppercase tracking-wider text-brand-yellow">{eyebrow}</p>}
+			<Heading class:list={['font-bold text-white', size === 'lg' ? 'text-4xl sm:text-5xl' : 'text-3xl sm:text-4xl']}>{title}</Heading>
+			{lead && <p class="mt-5 text-lg leading-relaxed text-gray-200 sm:text-xl">{lead}</p>}
+			<slot />
+		</div>
+	</div>
+</section>
