@@ -1,0 +1,31 @@
+---
+// The three certification callouts the brief asks for "across the capabilities and homepage sections": UL 508A,
+// UL 698A and the Third-Party system certification, each with its one-line description from the brief. Text marks
+// only: UL's own badge artwork needs UL's permission and the file, neither of which the site has.
+import { certifications } from '../data/capabilities.js';
+
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+
+// one icon per badge: a control panel, a bolt, a check badge
+const icons = [
+  '<rect x="4" y="4" width="16" height="16" rx="2" /><rect x="9" y="9" width="6" height="6" /><path d="M15 2v2M15 20v2M2 15h2M2 9h2M20 15h2M20 9h2M9 2v2M9 20v2" />',
+  '<path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z" />',
+  '<path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" /><path d="m9 12 2 2 4-4" />',
+];
+---
+<ul class:list={['grid gap-6 md:grid-cols-3', className]}>
+	{certifications.map((c, i) => (
+		<li class="flex gap-4">
+			<span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-brand-navy text-brand-yellow" aria-hidden="true">
+				<svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={icons[i]}></svg>
+			</span>
+			<div>
+				<h3 class="font-bold text-gray-900">{c.label}</h3>
+				<p class="mt-1 text-sm leading-relaxed text-gray-600">{c.text}</p>
+			</div>
+		</li>
+	))}
+</ul>

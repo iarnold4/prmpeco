@@ -1,11 +1,162 @@
 ---
-// Home. A stub: the brief's hero headline in the plain banner until the home page is built (hero photo, overlay,
-// the two CTAs).
+// Home: the hero (the brief's headline split by Isaac 2026-11-04: its "Backed by Decades of Family Leadership" tail is
+// the eyebrow, "Contractor" replaces "Engineering" per Mel, Oxford comma and "and" for the "&"; the sub-headline's first
+// sentence, the three state licenses, two calls to action; Isaac 2026-11-04 cut the
+// second sentence, whose facts the badge strip and the figures below already show), the three certification badges, the three
+// capability groups, the Our Roots band, the project-leadership band. Every sentence is the brief's (Mel Phillips,
+// Updated Version 3). Four photos are borrowed from sibling sites (src/assets/photos/SOURCES.md); the other photo slots
+// are labelled placeholders until a photo is sourced (Isaac 2026-11-04).
+import { Image } from 'astro:assets';
+import Placeholder from '../components/Placeholder.astro';
 import Page from '../layouts/Page.astro';
+import CertBadges from '../components/CertBadges.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { site } from '../data/site.js';
+import { specialization, manufacturing, services } from '../data/capabilities.js';
+import heroPhoto from '../assets/photos/control-panel-interior.jpg';
+import hqPhoto from '../assets/photos/prm-headquarters.jpg';
+import technicianPhoto from '../assets/photos/control-panel-technician.jpg';
+import fittingPhoto from '../assets/photos/explosion-proof-fitting.webp';
+
+const title = 'PRMPECO | Industrial, Hazardous Location, and Environmental Electrical Contractor';
+const description = site.division;
+
+// how wide a capability card's photo is shown (three across inside the 1280px container), and a half-width photo
+const CARD_SIZES = '(min-width: 1280px) 384px, (min-width: 1024px) 31vw, (min-width: 640px) 46vw, 92vw';
+const HALF_SIZES = '(min-width: 1280px) 584px, (min-width: 1024px) 46vw, 92vw';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: site.name,
+  url: `${site.url}/`,
+  logo: `${site.url}/images/logo.png`,
+  email: site.contact.email,
+  address: { '@type': 'PostalAddress', addressLocality: 'Butner', addressRegion: 'NC', addressCountry: 'US' },
+  parentOrganization: { '@type': 'Organization', name: site.owner, url: site.parent.href },
+};
 ---
-<Page
-	path="/"
-	title="PRMPECO"
-	banner="Industrial, Hazardous Location & Environmental Electrical Engineering Backed by Decades of Family Leadership"
->
+<Page path="/" title={title} description={description} jsonLd={jsonLd}>
+	<!-- Hero: a panel photo under a navy overlay, the brief's headline and sub-headline, its two buttons -->
+	<section class="relative flex min-h-[560px] items-center overflow-hidden bg-brand-navy text-white">
+		<Image src={heroPhoto} alt="" widths={[640, 800]} sizes="100vw" format="webp" quality={72} class="absolute inset-0 h-full w-full object-cover" loading="eager" fetchpriority="high" aria-hidden="true" />
+		<div class="absolute inset-0 bg-linear-to-r from-brand-navy/95 via-brand-navy/80 to-brand-navy/45" aria-hidden="true"></div>
+		<div class="container-site relative py-20">
+			<div class="max-w-3xl">
+				<p class="mb-4 text-sm font-semibold uppercase tracking-wider text-brand-yellow">Backed by Decades of Family Leadership</p>
+				<h1 class="text-3xl font-bold leading-tight text-white sm:text-4xl lg:text-5xl">
+					Industrial, Hazardous Location, and Environmental Electrical Contractor
+				</h1>
+				<p class="mt-6 max-w-2xl text-lg leading-relaxed text-gray-200 sm:text-xl">
+					{site.division}
+				</p>
+				<!-- the brief's three state licenses (Mel 2026-11-04: "I would focus on our licenses"); a number shows once it is
+				     filled in, the brief's [License #] placeholders stay out of the hero -->
+				<ul class="mt-6 space-y-2">
+					{site.licenses.map((l) => (
+						<li class="flex items-center gap-2 text-sm text-white">
+							<svg class="h-4 w-4 shrink-0 text-brand-yellow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+							<span>{l.label}{!l.number.startsWith('[') && <strong class="font-semibold"> {l.number}</strong>}</span>
+						</li>
+					))}
+				</ul>
+				<div class="mt-8 flex flex-wrap gap-4">
+					<a href="/contact/" class="btn-secondary btn-lg">Request Commercial Service</a>
+					<a href="/contact/#project-manager" class="btn-outline-white btn-lg">Speak with Our Project Manager</a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Certifications: the brief's three badges, as a strip under the hero -->
+	<section class="border-b border-gray-200 bg-brand-pale py-10">
+		<div class="container-site">
+			<h2 class="sr-only">Certifications</h2>
+			<CertBadges />
+		</div>
+	</section>
+
+	<!-- Capabilities: the brief's three groups, one card each, linking to the Capabilities page -->
+	<section class="section">
+		<div class="container-site">
+			<div class="text-center">
+				<h2 class="section-title">Service Capabilities</h2>
+			</div>
+			<div class="mt-12 grid gap-8 lg:grid-cols-3">
+				<article class="card sm:flex-row lg:flex-col">
+					<Image src={fittingPhoto} alt="An explosion-proof conduit fitting" widths={[400, 800]} sizes={CARD_SIZES} format="webp" class="aspect-[3/2] w-full bg-white object-cover sm:aspect-auto sm:w-2/5 sm:shrink-0 lg:aspect-[3/2] lg:w-full" loading="lazy" />
+					<div class="flex flex-1 flex-col p-6">
+						<p class="text-sm font-semibold uppercase tracking-wider text-brand-gray">{specialization.eyebrow}</p>
+						<h3 class="mt-2 text-xl font-bold text-gray-900">{specialization.title}</h3>
+						<p class="mt-3 flex-1 text-gray-600">{specialization.text}</p>
+						<a href="/capabilities/" class="mt-6 font-semibold text-brand-navy hover:text-brand-navy-dark">Service Capabilities <span aria-hidden="true">&rsaquo;</span></a>
+					</div>
+				</article>
+				<article class="card sm:flex-row lg:flex-col">
+					<Image src={technicianPhoto} alt="A technician wiring an open control panel" widths={[400, 560]} sizes={CARD_SIZES} format="webp" class="aspect-[3/2] w-full object-cover sm:aspect-auto sm:w-2/5 sm:shrink-0 lg:aspect-[3/2] lg:w-full" loading="lazy" />
+					<div class="flex flex-1 flex-col p-6">
+						<h3 class="text-xl font-bold text-gray-900">{manufacturing.title}</h3>
+						<ul class="mt-3 flex-1 space-y-2 text-gray-600">
+							{manufacturing.items.map((item) => (
+								<li class="flex gap-2"><span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-yellow" aria-hidden="true"></span><span><strong class="font-semibold text-gray-900">{item.label}:</strong> {item.text}</span></li>
+							))}
+						</ul>
+						<a href="/capabilities/" class="mt-6 font-semibold text-brand-navy hover:text-brand-navy-dark">Service Capabilities <span aria-hidden="true">&rsaquo;</span></a>
+					</div>
+				</article>
+				<article class="card sm:flex-row lg:flex-col">
+					<Placeholder label="A service electrician at a commercial or industrial facility: power distribution, motor controls, or a service call" class="aspect-[3/2] w-full sm:aspect-auto sm:w-2/5 sm:shrink-0 lg:aspect-[3/2] lg:w-full" />
+					<div class="flex flex-1 flex-col p-6">
+						<h3 class="text-xl font-bold text-gray-900">{services.title}</h3>
+						<p class="mt-3 text-gray-600">{services.text}</p>
+						<ul class="mt-3 flex-1 space-y-2 text-gray-600">
+							{services.items.map((item) => (
+								<li class="flex gap-2"><span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-yellow" aria-hidden="true"></span><span>{item}</span></li>
+							))}
+						</ul>
+						<a href="/capabilities/" class="mt-6 font-semibold text-brand-navy hover:text-brand-navy-dark">Service Capabilities <span aria-hidden="true">&rsaquo;</span></a>
+					</div>
+				</article>
+			</div>
+		</div>
+	</section>
+
+	<!-- Our Roots: the About page's first paragraph, the headquarters photo, the brief's three figures -->
+	<section class="section bg-brand-pale">
+		<div class="container-site">
+			<div class="grid items-center gap-12 lg:grid-cols-2">
+				<div>
+					<p class="mb-3 text-sm font-semibold uppercase tracking-wider text-brand-gray">Our Roots</p>
+					<h2 class="section-title">The PECO Heritage, Family Leadership &amp; Certified Quality</h2>
+					<p class="mt-5 text-lg leading-relaxed text-gray-700">
+						Family-owned and headed by the Phillips Family, PRMPECO brings Product Recovery Management, Inc. back to its founding roots. Originally established as Phillips Electric Company of Durham, Inc. (PECO), our team pioneered industrial electrical contracting across the region.
+					</p>
+					<div class="mt-8 flex flex-wrap gap-4">
+						<a href="/about/" class="btn-primary">About PRMPECO</a>
+						<a href={site.parent.href} class="btn-outline" target="_blank" rel="noopener">Visit {site.parent.label}</a>
+					</div>
+				</div>
+				<figure>
+					<Image src={hqPhoto} alt="PRM headquarters in Butner, NC" widths={[640, 800]} sizes={HALF_SIZES} format="webp" class="w-full rounded-lg object-cover shadow-lg" loading="lazy" />
+					<figcaption class="mt-3 text-sm text-gray-600">Our 200,000 sq. ft. headquarters in {site.location}.</figcaption>
+				</figure>
+			</div>
+			<dl class="mt-14 grid gap-6 text-center md:grid-cols-3">
+				<div class="flex flex-col rounded-lg border border-gray-200 bg-white p-6">
+					<dt class="order-2 mt-1 text-sm font-semibold uppercase tracking-wider text-brand-gray">Employees</dt>
+					<dd class="text-3xl font-bold text-brand-navy md:text-4xl">~150</dd>
+				</div>
+				<div class="flex flex-col rounded-lg border border-gray-200 bg-white p-6">
+					<dt class="order-2 mt-1 text-sm font-semibold uppercase tracking-wider text-brand-gray">Manufacturing and service facility</dt>
+					<dd class="text-3xl font-bold text-brand-navy md:text-4xl">200,000 sq. ft.</dd>
+				</div>
+				<div class="flex flex-col rounded-lg border border-gray-200 bg-white p-6">
+					<dt class="order-2 mt-1 text-sm font-semibold uppercase tracking-wider text-brand-gray">Unlimited Electrical Licenses</dt>
+					<dd class="text-3xl font-bold text-brand-navy md:text-4xl">NC, FL, WV</dd>
+				</div>
+			</dl>
+		</div>
+	</section>
+
+	<CtaBand />
 </Page>

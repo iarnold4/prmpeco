@@ -1,7 +1,7 @@
 # prmpeco.com
 
 Website for PRMPECO, the electrical service and controls division of Product Recovery Management, Inc. A plain
-static site built with [Astro](https://astro.build) and Tailwind, modelled on prmdetect.com, magstrainer.com and
+static site built with [Astro](https://astro.build) and Tailwind, modelled on prmdetect.com, magstrainer.com, and
 falmouthproducts.com. Nothing is built yet: this is the bare scaffold.
 
 ## Commands
