@@ -1,0 +1,26 @@
+---
+// A stand-in where a photo will go, saying which photo (Isaac 2026-11-04: "a placeholder that says the type of photo
+// we're looking for"). Default: a dashed box filling the photo's slot. `tag`: a small chip for the corner of a section
+// that has its own background (the home hero). Delete this component when the last placeholder is gone.
+interface Props {
+  label: string;
+  tag?: boolean;
+  class?: string;
+}
+const { label, tag = false, class: className } = Astro.props;
+const camera = '<path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z" /><circle cx="12" cy="13" r="3" />';
+---
+{tag ? (
+	<p class:list={['flex items-start gap-2 rounded border border-dashed border-white/60 bg-white/10 px-3 py-2 text-xs leading-snug text-white', className]}>
+		<svg class="mt-0.5 h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={camera}></svg>
+		<span><span class="font-semibold uppercase tracking-wider">Photo placeholder:</span> {label}</span>
+	</p>
+) : (
+	<div class:list={['flex items-center justify-center border-2 border-dashed border-brand-gray/50 bg-brand-pale p-6 text-center', className]}>
+		<div>
+			<svg class="mx-auto h-8 w-8 text-brand-gray" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={camera}></svg>
+			<p class="mt-2 text-xs font-semibold uppercase tracking-wider text-brand-gray">Photo placeholder</p>
+			<p class="mt-1 text-sm text-gray-600">{label}</p>
+		</div>
+	</div>
+)}

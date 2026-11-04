@@ -8,6 +8,7 @@ export const site = {
   // the brief's sub-headline, first sentence
   division: 'PRMPECO is the specialized electrical service and controls division of Product Recovery Management, Inc.',
   location: 'Butner, NC', // the brief gives the town and the facility, no street address
+  facility: '200,000 sq. ft. Operations Center', // the brief's page 4 line; joined to the location with a comma, not its en dash
   contact: {
     name: 'Christian Compton',
     role: 'Project Manager', // the brief: "Divisional Lead / Project Manager"

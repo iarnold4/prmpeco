@@ -11,7 +11,7 @@ interface Props {
 }
 const { title, lead, eyebrow, level: Heading = 'h1', size = 'lg', align = 'left' } = Astro.props;
 ---
-<section class:list={['relative overflow-hidden bg-gradient-to-r from-brand-navy to-brand-navy-dark text-white', size === 'lg' ? 'py-16 lg:py-24' : 'py-12 lg:py-16']}>
+<section class:list={['relative overflow-hidden bg-linear-to-r from-brand-navy to-brand-navy-dark text-white', size === 'lg' ? 'py-16 lg:py-24' : 'py-12 lg:py-16']}>
 	<div class:list={['container-site relative', align === 'center' && 'text-center']}>
 		<div class:list={[align === 'center' ? 'mx-auto max-w-3xl' : 'max-w-3xl']}>
 			{eyebrow && <p class="mb-3 text-sm font-semibold uppercase tracking-wider text-brand-yellow">{eyebrow}</p>}

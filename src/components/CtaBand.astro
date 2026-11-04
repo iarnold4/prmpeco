@@ -1,0 +1,43 @@
+---
+// The band above the footer: the brief's "Dedicated Local Project Leadership" block, with the project manager's
+// details beside it and the brief's first call to action. Every page can end with it.
+import { site } from '../data/site.js';
+
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+<section class:list={['section bg-brand-navy text-white', className]}>
+	<div class="container-site">
+		<div class="grid items-center gap-12 lg:grid-cols-2">
+			<div>
+				<p class="mb-3 text-sm font-semibold uppercase tracking-wider text-brand-yellow">Contact</p>
+				<h2 class="text-3xl font-bold text-white sm:text-4xl">Dedicated Local Project Leadership</h2>
+				<p class="mt-5 max-w-xl text-lg leading-relaxed text-gray-200">Every project and service request is managed with direct accountability out of our {site.location} headquarters.</p>
+				<div class="mt-8 flex flex-wrap gap-4">
+					<a href="/contact/" class="btn-secondary btn-lg">Request Commercial Service</a>
+				</div>
+			</div>
+			<div class="rounded-lg border border-white/15 bg-white/10 p-6 sm:p-8">
+				<p class="text-sm font-semibold uppercase tracking-wider text-brand-yellow">Local Project Manager</p>
+				<p class="mt-2 text-2xl font-bold text-white">{site.contact.name}</p>
+				<p class="text-gray-300">{site.contact.role}</p>
+				<dl class="mt-6 space-y-3 text-gray-200">
+					<div class="flex gap-3">
+						<dt class="w-24 shrink-0 font-semibold text-white">Phone</dt>
+						<dd>{site.contact.phone}</dd>
+					</div>
+					<div class="flex gap-3">
+						<dt class="w-24 shrink-0 font-semibold text-white">Email</dt>
+						<dd><a href={`mailto:${site.contact.email}`} class="text-brand-yellow underline hover:text-white">{site.contact.email}</a></dd>
+					</div>
+					<div class="flex gap-3">
+						<dt class="w-24 shrink-0 font-semibold text-white">Facility</dt>
+						<dd>{site.facility}, {site.location}</dd>
+					</div>
+				</dl>
+			</div>
+		</div>
+	</div>
+</section>
