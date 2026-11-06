@@ -13,6 +13,7 @@ import CertBadges from '../components/CertBadges.astro';
 import CtaBand from '../components/CtaBand.astro';
 import { site } from '../data/site.js';
 import { specialization, manufacturing, services } from '../data/capabilities.js';
+import { roots } from '../data/about.js';
 import heroPhoto from '../assets/photos/control-panel-interior.jpg';
 import hqPhoto from '../assets/photos/prm-headquarters.jpg';
 import technicianPhoto from '../assets/photos/control-panel-technician.jpg';
@@ -121,16 +122,14 @@ const jsonLd = {
 		</div>
 	</section>
 
-	<!-- Our Roots: the About page's first paragraph, the headquarters photo, the brief's three figures -->
+	<!-- Our Roots: the About page's title and first paragraph (src/data/about.js), the headquarters photo, the brief's three figures -->
 	<section class="section bg-brand-pale">
 		<div class="container-site">
 			<div class="grid items-center gap-12 lg:grid-cols-2">
 				<div>
-					<p class="mb-3 text-sm font-semibold uppercase tracking-wider text-brand-gray">Our Roots</p>
-					<h2 class="section-title">The PECO Heritage, Family Leadership &amp; Certified Quality</h2>
-					<p class="mt-5 text-lg leading-relaxed text-gray-700">
-						Family-owned and headed by the Phillips Family, PRMPECO brings Product Recovery Management, Inc. back to its founding roots. Originally established as Phillips Electric Company of Durham, Inc. (PECO), our team pioneered industrial electrical contracting across the region.
-					</p>
+					<p class="mb-3 text-sm font-semibold uppercase tracking-wider text-brand-gray">{roots.title}</p>
+					<h2 class="section-title">{roots.subtitle}</h2>
+					<p class="mt-5 text-lg leading-relaxed text-gray-700">{roots.paragraphs[0]}</p>
 					<div class="mt-8 flex flex-wrap gap-4">
 						<a href="/about/" class="btn-primary">About PRMPECO</a>
 						<a href={site.parent.href} class="btn-outline" target="_blank" rel="noopener">Visit {site.parent.label}</a>
