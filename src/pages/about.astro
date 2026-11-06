@@ -1,11 +1,64 @@
 ---
-// About (the brief's "Our Lineage" / "About Us & Company Roots"). A stub: the brief's section title, no body yet.
+// About (the brief's "Our Lineage" / "About Us & Company Roots"): the brief's Page 2 title and three paragraphs
+// (src/data/about.js) beside the headquarters photo, then its State Licensing list and the three certification
+// badges, then the project-leadership band. Every sentence is the brief's.
+import { Image } from 'astro:assets';
 import Page from '../layouts/Page.astro';
+import CertBadges from '../components/CertBadges.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { site } from '../data/site.js';
+import { roots } from '../data/about.js';
+import hqPhoto from '../assets/photos/prm-headquarters.jpg';
+
+const title = 'About PRMPECO | Our Roots';
+const description = roots.paragraphs[0].split('. ')[0] + '.'; // the first sentence
+
+// how wide a half-width photo is shown (two across inside the 1280px container)
+const HALF_SIZES = '(min-width: 1280px) 584px, (min-width: 1024px) 46vw, 92vw';
 ---
-<Page
-	path="/about/"
-	title="About | PRMPECO"
-	banner="Our Roots – The PECO Heritage, Family Leadership & Certified Quality"
-	bannerEyebrow="About"
->
+<Page path="/about/" title={title} description={description} banner={roots.title} bannerLead={roots.subtitle} bannerEyebrow="About">
+	<!-- The brief's three paragraphs, the headquarters photo, the two cross-links -->
+	<section class="section">
+		<div class="container-site grid items-center gap-12 lg:grid-cols-2">
+			<div>
+				<div class="prose-site">
+					{roots.paragraphs.map((p) => <p>{p}</p>)}
+				</div>
+				<div class="mt-8 flex flex-wrap gap-4">
+					<a href="/capabilities/" class="btn-primary">Service Capabilities</a>
+					<a href={site.parent.href} class="btn-outline" target="_blank" rel="noopener">Visit {site.parent.label}</a>
+				</div>
+			</div>
+			<figure>
+				<Image src={hqPhoto} alt="PRM headquarters in Butner, NC" widths={[640, 800]} sizes={HALF_SIZES} format="webp" class="w-full rounded-lg object-cover shadow-lg" loading="lazy" />
+				<figcaption class="mt-3 text-sm text-gray-600">Our 200,000 sq. ft. headquarters in {site.location}.</figcaption>
+			</figure>
+		</div>
+	</section>
+
+	<!-- The brief's State Licensing list (a number shows once it is filled in) and its three certification badges -->
+	<section class="section bg-brand-pale">
+		<div class="container-site grid gap-12 lg:grid-cols-2">
+			<div id="licensing">
+				<h2 class="text-2xl font-bold text-gray-900">State Licensing</h2>
+				<ul class="mt-6 space-y-4">
+					{site.licenses.map((l) => (
+						<li class="flex items-start gap-3">
+							<svg class="mt-0.5 h-5 w-5 shrink-0 text-brand-yellow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+							<div>
+								<p class="font-semibold text-gray-900">{l.label}</p>
+								{!l.number.startsWith('[') && <p class="text-sm text-gray-600">{l.number}</p>}
+							</div>
+						</li>
+					))}
+				</ul>
+			</div>
+			<div id="certifications">
+				<h2 class="text-2xl font-bold text-gray-900">Certifications</h2>
+				<CertBadges columns="grid-cols-1" class="mt-6" />
+			</div>
+		</div>
+	</section>
+
+	<CtaBand />
 </Page>
