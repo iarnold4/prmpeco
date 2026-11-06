@@ -1,11 +1,76 @@
 ---
-// Capabilities (the brief's "Core Capacities" / "Service Capabilities"). A stub: the brief's page title, no body yet.
+// Capabilities (the brief's "Core Capacities" / "Service Capabilities" page): its three groups, one section each in
+// the brief's order, then its Important Service Notice, then the project-leadership band. Every sentence is the
+// brief's Page 3, verbatim (src/data/capabilities.js, src/data/site.js). The two photos are the home page's
+// (src/assets/photos/SOURCES.md); the service photo is a labelled placeholder until one is sourced.
+import { Image } from 'astro:assets';
 import Page from '../layouts/Page.astro';
+import CertBadges from '../components/CertBadges.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Placeholder from '../components/Placeholder.astro';
+import { site } from '../data/site.js';
+import { specialization, manufacturing, services } from '../data/capabilities.js';
+import fittingPhoto from '../assets/photos/explosion-proof-fitting.webp';
+import technicianPhoto from '../assets/photos/control-panel-technician.jpg';
+
+const title = 'Service Capabilities | PRMPECO';
+const description = specialization.text;
+
+// how wide a half-width photo is shown (two across inside the 1280px container)
+const HALF_SIZES = '(min-width: 1280px) 584px, (min-width: 1024px) 46vw, 92vw';
 ---
-<Page
-	path="/capabilities/"
-	title="Capabilities | PRMPECO"
-	banner="Service Capabilities"
-	bannerEyebrow="Capabilities"
->
+<Page path="/capabilities/" title={title} description={description} banner="Service Capabilities" bannerEyebrow="Capabilities">
+	<!-- Primary Specialization: the brief's heading and paragraph, the explosion-proof fitting beside them -->
+	<section id="hazardous-location" class="section">
+		<div class="container-site grid items-center gap-12 lg:grid-cols-2">
+			<div>
+				<p class="mb-3 text-sm font-semibold uppercase tracking-wider text-brand-gray">{specialization.eyebrow}</p>
+				<h2 class="section-title">{specialization.title}</h2>
+				<p class="mt-5 text-lg leading-relaxed text-gray-700">{specialization.text}</p>
+			</div>
+			<figure class="overflow-hidden rounded-lg shadow-lg">
+				<Image src={fittingPhoto} alt="An explosion-proof conduit fitting" widths={[640, 1024]} sizes={HALF_SIZES} format="webp" class="aspect-[4/3] w-full bg-white object-cover" loading="lazy" />
+			</figure>
+		</div>
+	</section>
+
+	<!-- Control panels and manufacturing: the brief's four items, the technician photo beside them -->
+	<section id="control-panels" class="section bg-brand-pale">
+		<div class="container-site grid items-center gap-12 lg:grid-cols-2">
+			<figure class="order-last overflow-hidden rounded-lg shadow-lg lg:order-first">
+				<Image src={technicianPhoto} alt="A technician wiring an open control panel" widths={[560]} sizes={HALF_SIZES} format="webp" class="aspect-[4/3] w-full object-cover" loading="lazy" />
+			</figure>
+			<div>
+				<h2 class="section-title">{manufacturing.title}</h2>
+				<CertBadges all columns="sm:grid-cols-2 lg:grid-cols-1" class="mt-8" />
+			</div>
+		</div>
+	</section>
+
+	<!-- Commercial and industrial services: the brief's paragraph and five lines, then its Important Service Notice -->
+	<section id="electrical-services" class="section">
+		<div class="container-site">
+			<div class="grid items-center gap-12 lg:grid-cols-2">
+				<div>
+					<h2 class="section-title">{services.title}</h2>
+					<p class="mt-5 text-lg leading-relaxed text-gray-700">{services.text}</p>
+					<ul class="mt-8 space-y-3">
+						{services.items.map((item) => (
+							<li class="flex items-start gap-3 text-gray-900">
+								<svg class="mt-1 h-5 w-5 shrink-0 text-brand-yellow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+								<span class="font-semibold">{item}</span>
+							</li>
+						))}
+					</ul>
+				</div>
+				<Placeholder label="A service electrician at a commercial or industrial facility: power distribution, motor controls, or a service call" class="aspect-[4/3] w-full rounded-lg" />
+			</div>
+			<aside class="mt-14 rounded-lg border-l-4 border-brand-yellow bg-brand-pale p-6 sm:p-8" aria-labelledby="service-notice">
+				<p id="service-notice" class="text-sm font-semibold uppercase tracking-wider text-brand-navy">Important Service Notice</p>
+				<p class="mt-2 text-lg leading-relaxed text-gray-700">{site.serviceNotice}</p>
+			</aside>
+		</div>
+	</section>
+
+	<CtaBand />
 </Page>
